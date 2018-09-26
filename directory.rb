@@ -16,6 +16,7 @@ def interactive_menu
   loop do
     print_menu
     process(STDIN.gets.chomp)
+    puts 
   end
 end
 
@@ -122,24 +123,13 @@ def input_filename(mode)
 end
 
 def read_file(filename)
-  # if filename[-4, 4] == '.csv'
-    CSV.open(filename, 'rb') do |faster_csv|
-      faster_csv.readlines.each do |line|
-        name, cohort = line
-        insert_students(name, cohort)
-      end
+  CSV.open(filename, 'rb') do |faster_csv|
+    faster_csv.readlines.each do |line|
+      name, cohort = line
+      insert_students(name, cohort)
     end
-  # else
-  #   File.open(filename, 'r') { |file| file_read_lines(file) }
-  # end
+  end
 end
-
-# def file_read_lines(file)
-#   file.readlines.each do |line|
-#     name, cohort = line.chomp.split(',')
-#     insert_students(name, cohort)
-#   end
-# end
 
 try_load_students
 interactive_menu
