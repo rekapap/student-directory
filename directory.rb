@@ -1,12 +1,18 @@
 def input_students
-  puts 'Please enter the names of the students'
+  puts 'Please enter the names of the students,
+and optionally with cohort separated by comma'
   puts 'To finish, just hit return twice'
   students = []
-  name = gets.chomp
-  until name.empty?
-    students << { name: name, cohort: :november }
+  input = gets.chomp
+  cohorts = %w[january february march april may june july august september
+               october november december]
+  until input.empty?
+    input = input.split(',')
+    input << 'november' if input.length == 1 && !cohorts.include?(input[0].strip.downcase)
+    students << { name: input[0].strip, cohort: input[1].strip.to_sym,
+                  hobby: :coding }
     puts "Now we have #{students.count} students"
-    name = gets.chomp
+    input = gets.chomp
   end
   students
 end
@@ -19,14 +25,9 @@ end
 def print(students, letter)
   index = 0
   while index < students.length
-    # students.each_with_index do |student, index|
-    #   if student[:name][0] == letter.upcase && student[:name].length < 12
-    #     puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-    #   end
-    # end
     student = students[index]
     if student[:name][0] == letter.upcase && student[:name].length < 12
-      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)".center(40)
     end
     index += 1
   end
