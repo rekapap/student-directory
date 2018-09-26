@@ -6,7 +6,7 @@ def input_students
   # get the first name
   name = gets.chomp
   # while the name is not empty, repeat this code
-  unless name.empty do
+  until name.empty?
     # add the student hash to the array
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
@@ -36,4 +36,4 @@ end
 students = input_students
 print_header
 print(students)
-print_footer(students)
+#print_footer(students)
