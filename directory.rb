@@ -91,12 +91,7 @@ def load_students(filename = 'students.csv', input = true)
   filename = input_filename('l') if input
   if File.exist?(filename)
     @students = [] # rewrites the original @students
-    file = File.open(filename, 'r')
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      insert_students(name, cohort)
-    end
-    file.close
+    read_file(filename)
     load_success(filename)
   else
     puts 'No such a file! Loading was unsuccessful.'
@@ -123,6 +118,15 @@ def input_filename(mode)
   filename = gets.chomp
   filename = 'students.csv' if filename.empty?
   filename
+end
+
+def read_file(filename)
+  File.open(filename, 'r') do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      insert_students(name, cohort)
+    end
+  end
 end
 
 try_load_students
