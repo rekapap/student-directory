@@ -1,3 +1,4 @@
+require 'CSV'
 @students = []
 
 def try_load_students
@@ -21,8 +22,8 @@ end
 def print_menu
   puts ['1. Input the students',
         '2. Show the students',
-        '3. Save the list to students.csv',
-        '4. Load the list from students.csv',
+        '3. Save the list to a file',
+        '4. Load the list from a file',
         '9. Exit']
 end
 
@@ -114,20 +115,31 @@ def input_filename(mode)
   str_data = ['Enter a filename.',
               'If no filename is given, it will be saved into students.csv.',
               'If no filename is given, it will be loaded from students.csv.']
-  puts [str_data[0],(mode == 's' ? str_data[1] : str_data[2])]
+  puts [str_data[0], (mode == 's' ? str_data[1] : str_data[2])]
   filename = gets.chomp
   filename = 'students.csv' if filename.empty?
   filename
 end
 
 def read_file(filename)
-  File.open(filename, 'r') do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      insert_students(name, cohort)
+  # if filename[-4, 4] == '.csv'
+    CSV.open(filename, 'rb') do |faster_csv|
+      faster_csv.readlines.each do |line|
+        name, cohort = line
+        insert_students(name, cohort)
+      end
     end
-  end
+  # else
+  #   File.open(filename, 'r') { |file| file_read_lines(file) }
+  # end
 end
+
+# def file_read_lines(file)
+#   file.readlines.each do |line|
+#     name, cohort = line.chomp.split(',')
+#     insert_students(name, cohort)
+#   end
+# end
 
 try_load_students
 interactive_menu
