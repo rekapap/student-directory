@@ -79,13 +79,13 @@ end
 
 def save_students
   filename = input_filename('s')
-  file = File.open(filename, 'w')
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(',')
-    file.puts csv_line
+  File.open(filename, 'w') do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(',')
+      file.puts csv_line
+    end
   end
-  file.close
   save_success(filename)
 end
 
