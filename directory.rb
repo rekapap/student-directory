@@ -9,6 +9,7 @@ and optionally with cohort separated by comma'
   until input.empty?
     input = input.split(',')
     input << 'november' if input.length == 1 && !cohorts.include?(input[0].strip.downcase)
+    input.insert(0, 'Dracula') if input.length == 1 && cohorts.include?(input[0].strip.downcase)
     students << { name: input[0].strip, cohort: input[1].strip.to_sym,
                   hobby: :coding }
     puts "Now we have #{students.count} students"
