@@ -23,14 +23,12 @@ def print_header
   puts '-------------'
 end
 
-def print(students, letter)
-  index = 0
-  while index < students.length
-    student = students[index]
-    if student[:name][0] == letter.upcase && student[:name].length < 12
-      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)".center(40)
-    end
-    index += 1
+def print(students)
+  hash = students.group_by { |student| student[:cohort]}
+  hash.each do |cohort, data|
+    puts cohort
+    data.each { |student| puts student[:name] }
+    puts ''
   end
 end
 
@@ -47,13 +45,13 @@ students = [
   { name: 'Nurse Ratched', cohort: :november },
   { name: 'Michael Corleone', cohort: :november },
   { name: 'Alex DeLarge', cohort: :november },
-  { name: 'The Wicked Witch of the West', cohort: :november },
+  { name: 'The Wicked Witch of the West', cohort: :december },
   { name: 'Terminator', cohort: :november },
   { name: 'Freddy Krueger', cohort: :november },
   { name: 'The Joker', cohort: :november },
-  { name: 'Joffrey Baratheon', cohort: :november },
+  { name: 'Joffrey Baratheon', cohort: :december },
   { name: 'Norman Bates', cohort: :november }
 ]
-print_header
-print(students, 'D')
-print_footer(students)
+# print_header
+print(students)
+#print_footer(students)
